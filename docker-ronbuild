@@ -21,7 +21,7 @@ declare -a ONBUILDS
 for IMG_ID in $(docker history $IMAGE_NAME | grep -i onbuild | cut -f1 -d' '); do
   LABELS=$(docker inspect -f "{{json .ContainerConfig.Labels }}" $IMG_ID)
   if [ "${LABELS}" = '{}' ]; then
-    ONBUILDS=("${ONBUILDS[@]}" "${IMG_ID}")
+    ONBUILDS=("${IMG_ID}" "${ONBUILDS[@]}")
   else
     break
   fi
