@@ -42,8 +42,8 @@ done
 echo $OUTPUT_FILE
 cat $OUTPUT_FILE
 
-mv $OUTPUT_FILE `pwd`/examples
+mv $OUTPUT_FILE `pwd`
 
-docker build -t $IMAGE_NAME -f examples/$(basename "${OUTPUT_FILE}") examples/.
+docker build -t $IMAGE_NAME -f $(basename "${OUTPUT_FILE}") .
 
-rm `pwd`/examples/$(basename "${OUTPUT_FILE}")
+rm `pwd`/$(basename "${OUTPUT_FILE}")
