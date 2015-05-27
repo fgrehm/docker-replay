@@ -2,9 +2,18 @@
 
 # set -x
 
-# Soon to be arguments passed on to the CLI
-IMAGE_NAME='remove-docker-rebuilt'
+if [ "$#" -ne 1 ]; then
+  echo "${BASH_SOURCE} <IMAGE_NAME>"
+  exit 1
+fi
+
+IMAGE_NAME=${1}
 BUILD_TIMESTAMP=$(date +%Y%m%d%H%M%S)
+
+if [ $(docker images "${IMAGE_NAME}" | wc -l) -eq 1 ]; then
+  echo "The '${IMAGE_NAME}' image could not be found!"
+  exit 1
+fi
 
 declare -a ONBUILDS
 
