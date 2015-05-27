@@ -40,5 +40,8 @@ cat $OUTPUT_FILE
 mv $OUTPUT_FILE `pwd`
 
 docker build -t $IMAGE_NAME -f $(basename "${OUTPUT_FILE}") .
+BUILD_EXIT_CODE=$?
 
 rm `pwd`/$(basename "${OUTPUT_FILE}")
+
+exit $BUILD_EXIT_CODE

@@ -59,3 +59,23 @@ STR
     return 1
   fi
 }
+
+T_ONBUILD_RUN_failure() {
+  setup && cd $TMP_DIR
+
+  cat <<-STR > Dockerfile
+FROM busybox
+ONBUILD RUN [ -f /tmp/a-file ] && exit 1 || touch /tmp/a-file
+STR
+  docker_build $ONBUILD_IMG_NAME
+
+  cat <<-STR > Dockerfile
+FROM ${ONBUILD_IMG_NAME}
+STR
+  docker_build $TEST_IMG_NAME
+
+  if docker_replay $TEST_IMG_NAME &> /dev/null; then
+    $T_fail 'Returned exit code = 0'
+    return 1
+  fi
+}

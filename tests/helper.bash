@@ -10,9 +10,11 @@ setup() {
 
 docker_replay() {
   $REPLAY_BIN "${1}"
+  return $?
 }
 
 docker_build() {
   docker rmi $(docker images -q "${1}*") &>/dev/null
   docker build -t "${1}" . &>/dev/null
+  return $?
 }
