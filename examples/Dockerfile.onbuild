@@ -1,7 +1,0 @@
-FROM busybox
-
-RUN echo 'FOO BAR'
-
-ONBUILD ADD fixtures/added-file /tmp/added-file
-ONBUILD ADD fixtures/added-dir/ /tmp/added-dir
-ONBUILD RUN date
